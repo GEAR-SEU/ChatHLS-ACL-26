@@ -1,5 +1,7 @@
 # ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis
 
+[![arXiv](https://img.shields.io/badge/arXiv-2507.00642-b31b1b.svg)](https://arxiv.org/abs/2507.00642)
+
 **This repository is the public release for the ACL 2026 main conference paper *ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis*.**
 
 ChatHLS is an open-source workflow for transforming a source C/C++ project or natural-language HLS specification into optimized HLS-C through a LLM-driven pipeline:
