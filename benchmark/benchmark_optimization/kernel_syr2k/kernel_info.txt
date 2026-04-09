@@ -1,0 +1,8 @@
+kernel_syr2k
+L1,loop,80
+L2,loop,80
+L3,loop,60
+L4,loop,80
+C,array,80/80
+A,array,80/60
+B,array,80/60

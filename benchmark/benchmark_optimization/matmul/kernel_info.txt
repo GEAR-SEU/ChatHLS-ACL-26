@@ -1,0 +1,7 @@
+matmul
+row,loop,32
+col,loop,32
+product,loop,32
+A,array,32/32
+B,array,32/32
+AB,array,32/32

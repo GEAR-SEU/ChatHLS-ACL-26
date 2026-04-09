@@ -1,0 +1,17 @@
+kernel_3mm
+L1,loop,40
+L2,loop,50
+L3,loop,60
+L4,loop,50
+L5,loop,70
+L6,loop,80
+L7,loop,40
+L8,loop,70
+L9,loop,50
+E,array,40/50
+A,array,40/60
+B,array,60/50
+F,array,50/70
+C,array,50/80
+D,array,80/70
+G,array,40/70

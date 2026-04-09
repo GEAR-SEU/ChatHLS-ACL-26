@@ -1,0 +1,91 @@
+for (int och = 0; och < OutCh; ++och) {
+    for (int r = 0; r < OutDim; ++r) {
+        for (int c = 0; c < OutDim; ++c) {
+            acc_t acc = 0;
+			for (int kr = 0; kr < K; ++kr) {
+				for (int kc = 0; kc < K; ++kc) {
+					for (int ich = 0; ich < InCh; ++ich) {
+                        int in_r = r * S + kr - P;
+                        int in_c = c * S + kc - P;
+                        fm_t pixel_q = 0;
+                        if (in_r >= 0 && in_r < InDim && in_c >= 0 && in_c < InDim) {
+                            pixel_q = in[in_r * InDim * InCh + in_c * InCh + ich];
+                        }
+                        wt_t weight_q = weights[och*InCh*K*K + ich*K*K + kr*K + kc];
+                        acc += (pixel_q - input_zp) * weight_q;
+                    }
+                }
+            }
+                acc += bias[och];
+                final_wide_t rescaled_acc = (final_wide_t)acc * multiplier;
+                rescaled_acc = rescaled_acc >> shift;
+                out[och * OutDim * OutDim + r * OutDim + c] = relu6_int8(rescaled_acc, quantized_six);
+        }
+    }
+}
+
+
+for (int r = 0; r < OutDim; ++r) {
+    for (int c = 0; c < OutDim; ++c) {
+        for (int ch = 0; ch < Ch; ++ch) {
+            acc_t acc = 0;
+            for (int kr = 0; kr < K; ++kr) {
+                for (int kc = 0; kc < K; ++kc) {
+                    int in_r = r * S + kr - P;
+                    int in_c = c * S + kc - P;
+                    fm_t pixel_q = 0;
+                    if (in_r >= 0 && in_r < InDim && in_c >= 0 && in_c < InDim) {
+                        pixel_q = in[ch * InDim * InDim + in_r * InDim + in_c];
+                    }
+                    wt_t weight_q = weights[ch*K*K + kr*K + kc];
+                    acc += pixel_q * weight_q;
+                }
+            }
+            acc += bias[ch];
+            final_wide_t rescaled_acc = (final_wide_t)acc * multiplier;
+            rescaled_acc = rescaled_acc >> shift;
+            out[ch * OutDim * OutDim + r * OutDim + c] = relu6_int8(rescaled_acc, quantized_six);
+        }
+    }
+}
+
+
+for (int och = 0; och < OutCh; ++och) {
+    for (int i = 0; i < Dim * Dim; ++i) {
+        acc_t acc = 0;
+        for (int ich = 0; ich < InCh; ++ich) {
+            wt_t weight_q = weights[och * InCh + ich];
+            fm_t pixel_q = in[ich * Dim * Dim + i];
+            acc += pixel_q * weight_q;
+        }
+        acc += bias[och];
+        final_wide_t rescaled_acc = (final_wide_t)acc * multiplier;
+        rescaled_acc = rescaled_acc >> shift;
+        out[och * Dim * Dim + i] = relu6_int8(rescaled_acc, quantized_six);
+    }
+}
+
+
+for (int ch = 0; ch < Ch; ++ch) {
+    acc_t sum = 0;
+    for (int i = 0; i < pool_size; ++i) {
+        sum += in[ch * pool_size + i];
+    }
+    int64_t scaled_sum = (int64_t)sum * MULT_FACTOR;
+    int avg_val = scaled_sum >> SHIFT_FACTOR;
+    if (avg_val > 127) avg_val = 127;
+    else if (avg_val < -128) avg_val = -128;
+    out[ch] = (fm_t)avg_val;
+}
+
+for (int i = 0; i < NUM_CLASSES; ++i) {
+    final_wide_t acc = 0;
+    for (int j = 0; j < FC_IN_FEATURES; ++j) {
+        wt_t weight_q = weights[i * FC_IN_FEATURES + j];
+        fm_t input_q = in[j];
+        acc += input_q * weight_q;
+    }
+    acc += bias[i];
+    final_wide_t scaled_acc = acc * multiplier;
+    out[i] = scaled_acc >> shift;
+}

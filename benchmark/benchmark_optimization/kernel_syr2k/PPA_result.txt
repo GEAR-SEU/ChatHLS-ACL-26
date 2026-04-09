@@ -1,0 +1,4 @@
+latency: 393121 cycles
+util_dsp: 2.9%
+util_ff: 0.7%
+util_lut: 1.4%

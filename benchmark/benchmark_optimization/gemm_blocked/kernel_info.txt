@@ -1,0 +1,9 @@
+bbgemm
+loopjj,loop,8
+loopkk,loop,8
+loopi,loop,64
+loopk,loop,8
+loopj,loop,8
+m1,array,4096
+m2,array,4096
+prod,array,4096

@@ -1,0 +1,12 @@
+kernel_2mm
+L1,loop,40
+L2,loop,50
+L3,loop,70
+L4,loop,40
+L5,loop,80
+L6,loop,50
+tmp,array,40/50
+A,array,40/70
+B,array,70/50
+C,array,50/80
+D,array,40/80

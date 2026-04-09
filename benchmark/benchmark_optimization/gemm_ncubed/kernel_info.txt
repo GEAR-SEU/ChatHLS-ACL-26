@@ -1,0 +1,7 @@
+gemm
+outer,loop,64
+middle,loop,64
+inner,loop,64
+m1,array,4096
+m2,array,4096
+prod,array,4096

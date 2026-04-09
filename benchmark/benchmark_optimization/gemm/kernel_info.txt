@@ -1,0 +1,8 @@
+kernel_gemm
+L1,loop,20
+L2,loop,25
+L3,loop,30
+L4,loop,25
+C,array,20/25
+A,array,20/30
+B,array,30/25

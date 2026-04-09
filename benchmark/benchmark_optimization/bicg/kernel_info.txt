@@ -1,0 +1,9 @@
+kernel_bicg
+L1,loop,38
+L2,loop,42
+L3,loop,38
+A,array,42/38
+s,array,38
+q,array,42
+p,array,38
+r,array,42

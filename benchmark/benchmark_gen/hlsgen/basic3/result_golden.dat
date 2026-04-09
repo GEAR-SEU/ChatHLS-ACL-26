@@ -1,0 +1,9 @@
+in = 0 , pos = 0
+in = 0b01 , pos = 0b0
+in = 0b010 , pos = 0b01
+in = 0b011 , pos = 0b0
+in = 0b100 , pos = 0b10
+in = 0b101 , pos = 0b0
+in = 0b110 , pos = 0b01
+in = 0b111 , pos = 0b0
+all tests passed

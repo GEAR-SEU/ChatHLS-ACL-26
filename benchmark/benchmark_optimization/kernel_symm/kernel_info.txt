@@ -1,0 +1,7 @@
+kernel_symm
+L1,loop,60
+L2,loop,80
+L3,loop,60
+C,array,60/80
+A,array,60/60
+B,array,60/80

@@ -1,0 +1,11 @@
+kernel_covariance
+L1,loop,28
+L2,loop,32
+L3,loop,32
+L4,loop,28
+L5,loop,28
+L6,loop,28
+L7,loop,32
+data,array,32/28
+cov,array,28/28
+mean,array,28

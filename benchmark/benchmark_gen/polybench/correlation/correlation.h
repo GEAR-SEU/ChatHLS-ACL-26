@@ -1,0 +1,12 @@
+#pragma once
+
+#include <cmath>
+
+
+
+void correlation( 
+			double float_n,
+			double data[ 32 + 0][28 + 0],
+			double corr[ 28 + 0][28 + 0],
+			double mean[ 28 + 0],
+			double stddev[ 28 + 0]);

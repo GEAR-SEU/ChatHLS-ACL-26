@@ -1,0 +1,6 @@
+latency: 1629 cycles
+util_bram: 0%
+util_dsp: 13.9%
+util_ff: 1.7%
+util_lut: 3.8%
+util_uram: 0%

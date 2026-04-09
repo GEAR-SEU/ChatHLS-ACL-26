@@ -1,0 +1,8 @@
+kernel_gesummv
+L1,loop,30
+L2,loop,30
+A,array,30/30
+B,array,30/30
+tmp,array,30
+x,array,30
+y,array,30
