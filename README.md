@@ -1,4 +1,4 @@
-# ChatHLS
+# ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis
 
 ChatHLS is an open-source workflow for transforming a source C/C++ project or natural-language HLS specification into optimized HLS-C through a LLM-driven pipeline:
 
