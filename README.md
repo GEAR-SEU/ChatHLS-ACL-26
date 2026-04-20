@@ -1,6 +1,6 @@
 # ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis
 
-[![arXiv](https://img.shields.io/badge/arXiv-2507.00642-b31b1b.svg)](https://arxiv.org/abs/2507.00642)
+[![arXiv](https://img.shields.io/badge/arXiv-2507.00642-b31b1b.svg)](https://arxiv.org/abs/2507.00642) [![HLSFixer](https://img.shields.io/badge/🤗_Hugging_Face-HLSFixer-ffc107.svg)](https://huggingface.co/XXXiong/ChatHLS-HLSFixer) [![HLSTuner](https://img.shields.io/badge/🤗_Hugging_Face-HLSTuner-ffc107.svg)](https://huggingface.co/XXXiong/ChatHLS-HLSTuner)
 
 ChatHLS is an open-source workflow for transforming a source C/C++ project or natural-language HLS specification into optimized HLS-C through a LLM-driven pipeline:
 
@@ -35,23 +35,13 @@ Install dependencies first:
 pip install -r requirements.txt
 ```
 
-Run the workflow on a C/C++ project with the default API-based analysis backend:
+**Note**: To use the fine-tuned ChatHLS models (HLSFixer and HLSTuner), add the `--analysis-backend hf` argument to any of the commands below.
+
+Run the workflow on a C/C++ project:
 
 ```bash
 run_chathls.sh \
   --repo-root . \
-  --project-dir examples/projects/vector_mul \
-  --kernel-name vector_mul \
-  --top-function vector_mul \
-  --source-file vector_mul.cpp
-```
-
-Run the workflow on a C/C++ project with Hugging Face analysis models:
-
-```bash
-run_chathls.sh \
-  --repo-root . \
-  --analysis-backend hf \
   --project-dir examples/projects/vector_mul \
   --kernel-name vector_mul \
   --top-function vector_mul \
@@ -70,29 +60,10 @@ run_chathls.sh \
   --source-file wire_assign.cpp
 ```
 
-Run the workflow from a natural-language specification with Hugging Face analysis models:
-
-```bash
-run_chathls.sh \
-  --repo-root . \
-  --analysis-backend hf \
-  --spec-file examples/specs/wire_assign.md \
-  --template-dir examples/projects/wire_assign \
-  --kernel-name wire_assign \
-  --top-function wire_assign \
-  --source-file wire_assign.cpp
-```
-
 On Windows, run the batch wrapper instead. The wrapper always launches `chathls workflow`, so pass workflow arguments directly:
 
 ```bat
 run_chathls.bat --repo-root . --project-dir examples/projects/vector_mul --kernel-name vector_mul --top-function vector_mul --source-file vector_mul.cpp
-```
-
-To enable Hugging Face analysis models on Windows:
-
-```bat
-run_chathls.bat --repo-root . --analysis-backend hf --project-dir examples/projects/vector_mul --kernel-name vector_mul --top-function vector_mul --source-file vector_mul.cpp
 ```
 
 ## CLI Commands
