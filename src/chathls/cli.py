@@ -17,32 +17,63 @@ from .workflow import ChatHLSWorkflow
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="chathls")
-    parser.add_argument("--repo-root", default=".", help="Repository root")
-    parser.add_argument("--timeout", type=int, default=1800, help="HLS timeout in seconds")
-    parser.add_argument("--max-debug-attempts", type=int, default=2, help="Maximum debug attempts")
-    parser.add_argument("--max-optimization-rounds", type=int, default=2, help="Maximum optimization rounds")
+    _add_runtime_arguments(parser)
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     transform_parser = subparsers.add_parser("transform")
+    _add_runtime_arguments(transform_parser, suppress_defaults=True)
     _add_input_arguments(transform_parser)
     transform_parser.add_argument("--run-name", default="transform", help="Run directory prefix")
 
     run_parser = subparsers.add_parser("run-hls")
+    _add_runtime_arguments(run_parser, suppress_defaults=True)
     run_parser.add_argument("--project-dir", required=True, help="Project directory containing run_hls.tcl")
 
     debug_parser = subparsers.add_parser("debug")
+    _add_runtime_arguments(debug_parser, suppress_defaults=True)
     debug_parser.add_argument("--source-file", required=True, help="Source file to repair")
     debug_parser.add_argument("--failure-stage", required=True, choices=["csim", "csyn", "cosim"])
     debug_parser.add_argument("--failure-reason", default="Manual debug", help="Failure reason")
     debug_parser.add_argument("--baseline-file", required=True, help="Baseline source file")
 
     optimize_parser = subparsers.add_parser("optimize")
+    _add_runtime_arguments(optimize_parser, suppress_defaults=True)
     optimize_parser.add_argument("--source-file", required=True, help="Source file to optimize")
 
     workflow_parser = subparsers.add_parser("workflow")
+    _add_runtime_arguments(workflow_parser, suppress_defaults=True)
     _add_input_arguments(workflow_parser)
     workflow_parser.add_argument("--run-name", default="workflow", help="Run directory prefix")
     return parser
+
+
+def _add_runtime_arguments(parser: argparse.ArgumentParser, suppress_defaults: bool = False) -> None:
+    default = argparse.SUPPRESS if suppress_defaults else "."
+    parser.add_argument("--repo-root", default=default, help="Repository root")
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=argparse.SUPPRESS if suppress_defaults else 1800,
+        help="HLS timeout in seconds",
+    )
+    parser.add_argument(
+        "--max-debug-attempts",
+        type=int,
+        default=argparse.SUPPRESS if suppress_defaults else 2,
+        help="Maximum debug attempts",
+    )
+    parser.add_argument(
+        "--max-optimization-rounds",
+        type=int,
+        default=argparse.SUPPRESS if suppress_defaults else 2,
+        help="Maximum optimization rounds",
+    )
+    parser.add_argument(
+        "--analysis-backend",
+        choices=["api", "hf"],
+        default=argparse.SUPPRESS if suppress_defaults else "api",
+        help="Backend used by debug/optimize analysis models",
+    )
 
 
 def _add_input_arguments(parser: argparse.ArgumentParser) -> None:
@@ -60,6 +91,7 @@ def _config_from_args(args: argparse.Namespace) -> ChatHLSConfig:
         timeout_seconds=args.timeout,
         max_debug_attempts=args.max_debug_attempts,
         max_optimization_rounds=args.max_optimization_rounds,
+        analysis_backend=args.analysis_backend,
     )
 
 

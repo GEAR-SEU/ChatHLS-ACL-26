@@ -10,6 +10,10 @@ When the first debug repair still fails validation, ChatHLS escalates to a multi
 
 This repository is the public release for the ACL 2026 main conference paper *ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis*.
 
+## Models
+
+The fine-tuned model weights for ChatHLS are available on Hugging Face: [**HLSFixer**](https://huggingface.co/XXXiong/ChatHLS-HLSFixer), [**HLSTuner**](https://huggingface.co/XXXiong/ChatHLS-HLSTuner).
+
 ## Configuration
 
 Edit these defaults there before running ChatHLS:
@@ -25,11 +29,29 @@ Edit these defaults there before running ChatHLS:
 
 ## Quickstart
 
-Run the workflow on an C/C++ project:
+Install dependencies first:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the workflow on a C/C++ project with the default API-based analysis backend:
 
 ```bash
 run_chathls.sh \
   --repo-root . \
+  --project-dir examples/projects/vector_mul \
+  --kernel-name vector_mul \
+  --top-function vector_mul \
+  --source-file vector_mul.cpp
+```
+
+Run the workflow on a C/C++ project with Hugging Face analysis models:
+
+```bash
+run_chathls.sh \
+  --repo-root . \
+  --analysis-backend hf \
   --project-dir examples/projects/vector_mul \
   --kernel-name vector_mul \
   --top-function vector_mul \
@@ -48,10 +70,29 @@ run_chathls.sh \
   --source-file wire_assign.cpp
 ```
 
-On Windows, run the batch wrapper instead:
+Run the workflow from a natural-language specification with Hugging Face analysis models:
+
+```bash
+run_chathls.sh \
+  --repo-root . \
+  --analysis-backend hf \
+  --spec-file examples/specs/wire_assign.md \
+  --template-dir examples/projects/wire_assign \
+  --kernel-name wire_assign \
+  --top-function wire_assign \
+  --source-file wire_assign.cpp
+```
+
+On Windows, run the batch wrapper instead. The wrapper always launches `chathls workflow`, so pass workflow arguments directly:
 
 ```bat
 run_chathls.bat --repo-root . --project-dir examples/projects/vector_mul --kernel-name vector_mul --top-function vector_mul --source-file vector_mul.cpp
+```
+
+To enable Hugging Face analysis models on Windows:
+
+```bat
+run_chathls.bat --repo-root . --analysis-backend hf --project-dir examples/projects/vector_mul --kernel-name vector_mul --top-function vector_mul --source-file vector_mul.cpp
 ```
 
 ## CLI Commands

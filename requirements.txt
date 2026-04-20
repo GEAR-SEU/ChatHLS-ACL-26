@@ -1,1 +1,3 @@
 psutil>=5.9
+transformers>=4.46
+torch>=2.1

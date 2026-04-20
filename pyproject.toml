@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [{ name = "ChatHLS Authors" }]
-dependencies = ["psutil>=5.9"]
+dependencies = ["psutil>=5.9", "transformers>=4.46", "torch>=2.1"]
 
 [project.scripts]
 chathls = "chathls.cli:main"
