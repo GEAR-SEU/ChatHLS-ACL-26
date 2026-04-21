@@ -37,7 +37,7 @@ Install dependencies first:
 pip install -r requirements.txt
 ```
 
-**Note**: By default, ChatHLS uses `DEFAULT_TRANSFORM_MODEL` for the debug/optimize analysis steps as well. To switch those analysis steps to the fine-tuned Hugging Face models (`HLSFixer` and `HLSTuner`), add `--analysis-backend hf` to any of the commands below.
+**Note**: By default, ChatHLS uses `DEFAULT_TRANSFORM_MODEL` for the debug/optimize analysis steps as well. To switch those analysis steps to the fine-tuned ChatHLS models (`HLSFixer` and `HLSTuner`), add `--analysis-backend hf` to any of the commands below.
 
 Run the workflow on a C/C++ project:
 
