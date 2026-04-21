@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import http.client
 import json
 import re
+import socket
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -39,6 +41,7 @@ class LLMAdapter:
     optimize_analysis_model: str
     optimize_modify_model: str
     timeout_seconds: int = 120
+    max_api_retries: int = 2
     _hf_clients: dict[str, Any] | None = None
 
     @classmethod
@@ -113,20 +116,30 @@ class LLMAdapter:
             },
             method="POST",
         )
-        try:
-            with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
-                body = json.loads(response.read().decode("utf-8"))
-        except urllib.error.HTTPError as error:
-            message = error.read().decode("utf-8", errors="ignore")
-            raise RuntimeError(f"LLM request failed: {message}") from error
-        except urllib.error.URLError as error:
-            raise RuntimeError(f"LLM request failed: {error}") from error
+        for attempt in range(self.max_api_retries + 1):
+            try:
+                with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+                    body = json.loads(response.read().decode("utf-8"))
+                break
+            except urllib.error.HTTPError as error:
+                message = error.read().decode("utf-8", errors="ignore")
+                raise RuntimeError(
+                    f"LLM request failed for model '{model}' with HTTP {error.code}: {message}"
+                ) from error
+            except (urllib.error.URLError, http.client.RemoteDisconnected, ConnectionResetError, socket.timeout) as error:
+                if attempt < self.max_api_retries:
+                    continue
+                raise RuntimeError(
+                    f"LLM request failed for model '{model}' after {attempt + 1} attempts: {error}"
+                ) from error
+            except json.JSONDecodeError as error:
+                raise RuntimeError(f"LLM response for model '{model}' was not valid JSON") from error
         choices = body.get("choices", [])
         if not choices:
-            raise RuntimeError("LLM response did not contain choices")
+            raise RuntimeError(f"LLM response for model '{model}' did not contain choices: {body}")
         content = choices[0].get("message", {}).get("content")
         if not content:
-            raise RuntimeError("LLM response did not contain message content")
+            raise RuntimeError(f"LLM response for model '{model}' did not contain message content: {body}")
         return content
 
     def _invoke_huggingface(self, messages: list[dict[str, str]], model: str) -> str:

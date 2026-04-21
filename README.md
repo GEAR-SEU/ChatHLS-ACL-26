@@ -35,7 +35,7 @@ Install dependencies first:
 pip install -r requirements.txt
 ```
 
-**Note**: To use the fine-tuned ChatHLS models (HLSFixer and HLSTuner), add the `--analysis-backend hf` argument to any of the commands below.
+**Note**: By default, ChatHLS uses `DEFAULT_TRANSFORM_MODEL` for the debug/optimize analysis steps as well. To switch those analysis steps to the fine-tuned Hugging Face models (`HLSFixer` and `HLSTuner`), add `--analysis-backend hf` to any of the commands below.
 
 Run the workflow on a C/C++ project:
 
@@ -60,7 +60,7 @@ run_chathls.sh \
   --source-file wire_assign.cpp
 ```
 
-On Windows, run the batch wrapper instead. The wrapper always launches `chathls workflow`, so pass workflow arguments directly:
+On Windows, run the batch wrapper instead:
 
 ```bat
 run_chathls.bat --repo-root . --project-dir examples/projects/vector_mul --kernel-name vector_mul --top-function vector_mul --source-file vector_mul.cpp
@@ -77,6 +77,10 @@ run_chathls.bat --repo-root . --project-dir examples/projects/vector_mul --kerne
 ## Outputs
 
 Each workflow run creates a timestamped directory under `runs/` with:
+
+- `summary.json`: top-level run summary, including validation/optimization counts, pass/fail status, and the final latency/resource report.
+- `artifacts/`: stage artifacts such as validation/debug results, and per-round optimization decisions plus generated candidate source files.
+- `project/`: a working project used for the run, including the current HLS source/testbench, `run_hls.tcl`, and `logs/compilation_log.txt`.
 
 ## Requirements
 
