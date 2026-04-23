@@ -11,8 +11,6 @@ ChatHLS is an open-source workflow for transforming a source C/C++ project or na
 
 When the first debug repair still fails validation, ChatHLS escalates to a multi-end debug evaluation path that runs multiple analysis agents, scores their suggestions, and then applies the selected repair.
 
-This repository is the public release for paper *ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis*.
-
 ## Models
 
 The fine-tuned model weights for ChatHLS are available on Hugging Face: [**HLSFixer**](https://huggingface.co/XXXiong/ChatHLS-HLSFixer), [**HLSTuner**](https://huggingface.co/XXXiong/ChatHLS-HLSTuner).
