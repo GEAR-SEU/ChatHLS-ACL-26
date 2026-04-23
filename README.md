@@ -1,5 +1,5 @@
 # ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis
-> 🎉 **Accepted by ACL 2026 main conference**
+> 🌟 **Accepted by ACL 2026 main conference**
 
 [![arXiv](https://img.shields.io/badge/arXiv-2507.00642-b31b1b.svg)](https://arxiv.org/abs/2507.00642) [![HLSFixer](https://img.shields.io/badge/🤗_Hugging_Face-HLSFixer-ffc107.svg)](https://huggingface.co/XXXiong/ChatHLS-HLSFixer) [![HLSTuner](https://img.shields.io/badge/🤗_Hugging_Face-HLSTuner-ffc107.svg)](https://huggingface.co/XXXiong/ChatHLS-HLSTuner)
 
