@@ -1,4 +1,5 @@
 # ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis
+> 🎉 **Accepted by ACL 2026 main conference**
 
 [![arXiv](https://img.shields.io/badge/arXiv-2507.00642-b31b1b.svg)](https://arxiv.org/abs/2507.00642) [![HLSFixer](https://img.shields.io/badge/🤗_Hugging_Face-HLSFixer-ffc107.svg)](https://huggingface.co/XXXiong/ChatHLS-HLSFixer) [![HLSTuner](https://img.shields.io/badge/🤗_Hugging_Face-HLSTuner-ffc107.svg)](https://huggingface.co/XXXiong/ChatHLS-HLSTuner)
 
@@ -10,7 +11,7 @@ ChatHLS is an open-source workflow for transforming a source C/C++ project or na
 
 When the first debug repair still fails validation, ChatHLS escalates to a multi-end debug evaluation path that runs multiple analysis agents, scores their suggestions, and then applies the selected repair.
 
-This repository is the public release for the ACL 2026 main conference paper *ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis*.
+This repository is the public release for paper *ChatHLS: Towards Systematic Design Automation and Optimization for High-Level Synthesis*.
 
 ## Models
 
